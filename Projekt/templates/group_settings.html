@@ -1,0 +1,267 @@
+<!-- TODO tlacidlo odstranit skupinu -->
+<!-- Moderator iba vyamze clenov skupiny a odstrani prispevky -->
+<!-- meno skupiny max 30, descrip max 2 000, login max 30, meno 20 priezvisko 20, description 2 000 -->
+<!doctype html>
+<html>
+<head>
+    <meta charset = "utf-8" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css"/>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='pictures/logo.png') }}"/>
+    <title>Free chat</title>
+</head>
+<body>
+    <!-- FLASH WAY -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <!-- The Modal for Settings -->
+        <div id="myFlashModal" class="flash_modal">
+           <!-- Modal content for Settings-->
+           <div class="flash_modal_content">
+               <span class="close flash_close">&times;</span>
+               <ul class=flashes>
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+                </ul>
+           </div>
+        </div>
+    {% endif %}
+    {% endwith %}
+
+    <!-- JavaScript -->
+    <script>
+        // Get the modal
+    var modal = document.getElementById("myFlashModal");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+    </script>
+
+<!-- HEADER - profile + search + logo -->
+<header>
+    <!-- PROFILE -->
+        <!-- If user is logged in -->
+        {% if not visitor %}
+            <div id="profile_container">
+                <a href="{{ url_for('profile', user_id=user_id) }}">
+                    <div id="profile_container_image">
+                        <img src="{{ img_src }}" alt="Profile picture" id="profile_picture_center"/>
+                    </div>
+                    <div id="profile_container_description">
+                        {{ username }} <br>
+                        {% if admin %}
+                        Admin
+                        {% elif owner %}
+                        Owner
+                        {% elif moderator %}
+                        Moderator
+                        {% elif member %}
+                        Member
+                        {% else %}
+                        User
+                        {% endif %}
+                    </div>
+                </a>
+            </div>
+        <!-- If he is a visitor -->
+        {% else %}
+            <div id="profile_container">
+                <div id="profile_container_image">
+                    <img src="{{ img_src }}" alt="Profile picture" id="profile_picture_center"/>
+                </div>
+                <div id="profile_container_visitor">
+                    <span class="visitor_title">Visitor</span>
+                </div>
+            </div>
+        {% endif %}
+
+    <!-- SEARCH -->
+    <div id="search_bar_box">
+        <!-- TODO searchbar -->
+        <form action="{{ url_for('search') }}" method="POST" id="search_bar_form" >
+            <input type="text" placeholder="Search.." name="search" id="search_bar_input">
+            <a href="#" type="submit" onclick="submit_form()">
+                <div class="search_icon"></div>
+            </a>
+        </form>
+    </div>
+
+    <!-- LOGOUT or LOGIN for visitor -->
+    {% if not visitor %}
+    <div class="logout_container">
+        <a href="{{ url_for('logout') }}">
+            <button>Logout</button>
+        </a>
+    </div>
+    {% else %}
+    <div class="logout_container">
+        <a href="{{ url_for('login') }}">
+            <button>Login</button>
+        </a>
+    </div>
+    {% endif %}
+</header>
+
+    <!-- ARTICLE - left panel[create new group, groups] + right panel [creating new group, creating new thread, threads] -->
+    <article>
+        <!-- LEFT PANEL -->
+        <div id="left_panel">
+            <!-- GROUPS -->
+            <div class="lp_gn">GROUPS</div>
+
+            <!-- OWNER -->
+            {% if gowner %}
+                <div class="lp_gt">Owner</div>
+                {% for group in gowner %}
+                <a href="{{ url_for('group', group_id=group[0].ID) }}">
+                    <div class="group_container">
+                        <div class="left_panel_group_picture_container">
+                            <img src="{{ group[1] }}" alt="Group icon" class="left_panel_group_picture">
+                        </div>
+                        <div class="left_panel_group_text">
+                            <span class="left_panel_group_title"><h3>{{ group[0].Name.replace("_", " ") }}</h3></span>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            {% endif %}
+
+            <!-- MODERATOR -->
+            {% if gmoderator %}
+                <div class="lp_gt">Moderator</div>
+                {% for group in gmoderator %}
+                <a href="{{ url_for('group', group_id=group[0].ID) }}">
+                    <div class="group_container">
+                        <div class="left_panel_group_picture_container">
+                            <img src="{{ group[1] }}" alt="Group icon" class="left_panel_group_picture">
+                        </div>
+                        <div class="left_panel_group_text">
+                            <span class="left_panel_group_title"><h3>{{ group[0].Name.replace("_", " ") }}</h3></span>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            {% endif %}
+
+            <!-- MEMBER -->
+            {% if gmember %}
+                <div class="lp_gt">Member</div>
+                {% for group in gmember %}
+                <a href="{{ url_for('group', group_id=group[0].ID) }}">
+                    <div class="group_container">
+                        <div class="left_panel_group_picture_container">
+                            <img src="{{ group[1] }}" alt="Group icon" class="left_panel_group_picture">
+                        </div>
+                        <div class="left_panel_group_text">
+                            <span class="left_panel_group_title"><h3>{{ group[0].Name.replace("_", " ") }}</h3></span>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-- RIGHT PANEL-->
+        <div class="right_panel">
+            
+            <!-- Go back & delete group -->
+            <div class="for_back_button">
+                <!-- back -->
+                <a href="{{ url_for('group', group_id=group_id) }}">
+                    <button class="float_left">
+                        &#10094; Back
+                    </button>
+                </a>
+                <!-- delete button -->
+                <a href="{{ url_for('delete_group', group_id=group_id) }}" onclick="return confirm('Are you sure you want to delete this group?');">
+                    <button class="del_button float_right">Delete group</button>
+                </a>
+            </div> 
+
+            <!-- Settings -->
+            <div class="group_rc">
+
+                <br><h1 class="settings_title">Settings</h1><br><hr>
+                <!-- TODO group settings -->
+                <form action="{{ url_for('group_settings', group_id=group_id) }}" method="POST" id="settings" enctype="multipart/form-data">
+
+                    <!-- group name -->
+                    <label for="group_name" ><h3>Group name</h3></label>
+                    <input name="group_name" type="text" placeholder="Enter Group Name" id="group_name" 
+                    class="input_box" {% if form %} value="{{ form['group_name'] }}" {% endif %} maxlength="30">
+
+                    <!-- description -->
+                    <label for="description"><h3>Description</h3></label>
+                    <input name="description" type="text" placeholder="Enter Description" id="description" 
+                    class="input_box" {% if form %} value="{{ form['description']  }}" {% endif %} maxlength="2000">
+
+                    <!-- image -->
+                    <label for="group_image"><h3>Group picture</h3></label>
+                    <input id="group_image" name="group_image" type="file" {% if form %} value={{ form['group_image'] }} {% endif %}
+                    placeholder="Group pricture" accept="image/*" onchange="Filevalidation()" capture>
+                    <p id="size"></p>
+                    <span class="remove_img_form" id="rm_img" onclick="remove_img()">Remove image</span>
+                    <br><br>
+
+                    <!-- visibility -->
+                    <label for="visibility"><h3>Visibility for:</h3></label><br>
+
+                    <input id="visibility1" class="radio" type="radio" name="visibility" value="0" {% if not form %} {% elif form['visibility'] == "0" %} checked="checked" {% endif %}>
+                    <label for="visibility1" class="radio">All users</label><br>
+
+                    <input id="visibility2" class="radio" type="radio" name="visibility" value="1" {% if form and form['visibility'] == '1' %} checked = "checked" {% endif %}>
+                    <label for="visibility2" class="radio">Registered users</label><br>
+
+                    <input id="visibility3" class="radio" type="radio" name="visibility" value="2" {% if form and form['visibility'] == '2' %} checked = "checked" {% endif %}>
+                    <label for="visibility3" class="radio">Members of this group</label><br>
+
+                    <br>
+                    <!-- save and back -->
+                    <button form="settings" type="submit" id="create_group_button">Save changes</button>
+                </form>
+            </div>
+        </div>
+    </article>
+</body>
+
+<!-- JavaScript -->
+<script type="text/javascript">
+    function remove_img(){
+        document.getElementById("group_image").value = "";
+        document.getElementById("rm_img").style.display = "none";
+    }
+
+    /* Validating file size */
+    Filevalidation = () => {
+        const fi = document.getElementById('group_image');
+        // Check if any file is selected.
+        if (fi.files.length > 0)
+        {
+            const fsize = fi.files.item(0).size;
+            const file = Math.round((fsize / 1024));
+
+            // The size of the file.
+            if (file >= 2048)
+            {
+                alert("File is too Big, please select a file less than 2mb");
+                document.getElementById("size").innerHTML = '<b>' + file + '</b> KB';
+                remove_img();
+            }
+            document.getElementById("rm_img").style.display = "block";
+        }
+    }
+</script>
+</html>
+</doctype>

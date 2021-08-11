@@ -1,0 +1,234 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset = "utf-8" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css"/>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='pictures/logo.png') }}"/>
+    <title>Free chat</title>
+</head>
+<body>
+    <!-- FLASH WAY -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <!-- The Modal for Settings -->
+        <div id="myFlashModal" class="flash_modal">
+           <!-- Modal content for Settings-->
+           <div class="flash_modal_content">
+               <span class="close flash_close">&times;</span>
+               <ul class=flashes>
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+                </ul>
+           </div>
+        </div>
+    {% endif %}
+    {% endwith %}
+
+<!-- HEADER - profile + search + logo -->
+<header>
+    <!-- PROFILE -->
+        <!-- If user is logged in -->
+        {% if not visitor %}
+            <div id="profile_container">
+                <a href="{{ url_for('profile', user_id=user_id) }}">
+                    <div id="profile_container_image">
+                        <img src="{{ img_src }}" alt="Profile picture" id="profile_picture_center"/>
+                    </div>
+                    <div id="profile_container_description">
+                        {{ username }} <br>
+                        {% if admin %}
+                        Admin
+                        {% elif owner %}
+                        Owner
+                        {% elif moderator %}
+                        Moderator
+                        {% elif member %}
+                        Member
+                        {% else %}
+                        User
+                        {% endif %}
+                    </div>
+                </a>
+            </div>
+        <!-- If he is a visitor -->
+        {% else %}
+            <div id="profile_container">
+                <div id="profile_container_image">
+                    <img src="{{ img_src }}" alt="Profile picture" id="profile_picture_center"/>
+                </div>
+                <div id="profile_container_visitor">
+                    <span class="visitor_title">Visitor</span>
+                </div>
+            </div>
+        {% endif %}
+
+    <!-- SEARCH -->
+    <div id="search_bar_box">
+        <!-- TODO searchbar -->
+        <form action="{{ url_for('search') }}" method="POST" id="search_bar_form" >
+            <input type="text" placeholder="Search.." name="search" id="search_bar_input">
+            <a href="#" type="submit" onclick="submit_form()">
+                <div class="search_icon"></div>
+            </a>
+        </form>
+    </div>
+
+    <!-- LOGOUT or LOGIN for visitor -->
+    {% if not visitor %}
+    <div class="logout_container">
+        <a href="{{ url_for('logout') }}">
+            <button>Logout</button>
+        </a>
+    </div>
+    {% else %}
+    <div class="logout_container">
+        <a href="{{ url_for('login') }}">
+            <button>Login</button>
+        </a>
+    </div>
+    {% endif %}
+</header>
+
+    <!-- ARTICLE - left panel[create new group, groups] + right panel [creating new group, creating new thread, threads] -->
+    <article>
+        <!-- LEFT PANEL -->
+        <div id="left_panel">
+            
+            <!-- GROUPS -->
+            <div class="lp_gn">GROUPS</div>
+
+            <!-- OWNER -->
+            {% if gowner %}
+                <div class="lp_gt">Owner</div>
+                {% for group in gowner %}
+                <a href="{{ url_for('group', group_id=group[0].ID) }}">
+                    <div class="group_container">
+                        <div class="left_panel_group_picture_container">
+                            <img src="{{ group[1] }}" alt="Group icon" class="left_panel_group_picture">
+                        </div>
+                        <div class="left_panel_group_text">
+                            <span class="left_panel_group_title"><h3>{{ group[0].Name.replace("_", " ") }}</h3></span>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            {% endif %}
+
+            <!-- MODERATOR -->
+            {% if gmoderator %}
+                <div class="lp_gt">Moderator</div>
+                {% for group in gmoderator %}
+                <a href="{{ url_for('group', group_id=group[0].ID) }}">
+                    <div class="group_container">
+                        <div class="left_panel_group_picture_container">
+                            <img src="{{ group[1] }}" alt="Group icon" class="left_panel_group_picture">
+                        </div>
+                        <div class="left_panel_group_text">
+                            <span class="left_panel_group_title"><h3>{{ group[0].Name.replace("_", " ") }}</h3></span>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            {% endif %}
+
+            <!-- MEMBER -->
+            {% if gmember %}
+                <div class="lp_gt">Member</div>
+                {% for group in gmember %}
+                <a href="{{ url_for('group', group_id=group[0].ID) }}">
+                    <div class="group_container">
+                        <div class="left_panel_group_picture_container">
+                            <img src="{{ group[1] }}" alt="Group icon" class="left_panel_group_picture">
+                        </div>
+                        <div class="left_panel_group_text">
+                            <span class="left_panel_group_title"><h3>{{ group[0].Name.replace("_", " ") }}</h3></span>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+
+        <!-- RIGHT PANEL-->
+        <div class="right_panel">
+            <div class="for_back_button">
+                <!-- Go back -->
+                <a href="{{ url_for('group', group_id=group_id) }}">
+                    <button class="float_left">
+                        &#10094; Back
+                    </button>
+                </a>
+            </div>
+            <!-- MEMBERS -->
+            <div class="group_rc">                
+                <!-- Title + table-->
+                <br><h1>Members</h1><br><hr>
+                <table class="table_members">
+                    <tr>
+                        <th><h2>Picture</h2></th>
+                        <th><h2>Login</h2></th>
+                        <th></th>
+                    </tr>
+
+                    <tr>
+                        <td><img src="{{ owner_src }}" alt="Profile picture" class="members_picture"></td>
+                        <td> <a href="{{ url_for('profile', user_id=user_id) }}">{{ group_owner.Login }}</a></td>
+                        {% if admin %}
+                        <td><button class="del_button">Remove</button></td>
+                        {% endif %}
+                    </tr>
+
+                    {% if moderators %}
+                    {% for member in moderators %}
+                    <tr>
+                        <td><img src="{{ member[1] }}" alt="Profile picture" class="members_picture"></td>
+                        <td><a href="{{ url_for('profile', user_id=member[0].ID) }}">{{ member[0].Login }}</a></td>
+                        {% if admin or owner or moderator %}
+                        <td><a href="{{ url_for('kick', group_id=group_id, user_id=member[0].ID) }}"><button class="del_button">Remove</button></a></td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                    {% endif %}
+
+                    {% if members %}
+                    {% for member in members %}
+                    <tr>
+                        <td><img src="{{ member[1] }}" alt="Profile picture" class="members_picture"></td>
+                        <td><a href="{{ url_for('profile', user_id=member[0].ID) }}">{{ member[0].Login }}</a></td>
+                        {% if admin or owner or moderator %}
+                        <td><a href="{{ url_for('kick', group_id=group_id, user_id=member[0].ID) }}"><button class="del_button">Remove</button></a></td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                    {% endif %}
+                </table>
+            </div>          
+        </div>
+    </article>
+</body>
+
+<!-- JavaScript -->
+<script type="text/javascript">
+    // Get the modal
+var modal = document.getElementById("myFlashModal");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+
+</html>
+</doctype>

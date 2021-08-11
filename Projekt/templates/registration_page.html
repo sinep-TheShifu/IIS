@@ -1,0 +1,132 @@
+<!-- TODO overit input -->
+<doctype! html>
+<html>
+<head>
+    <meta charset = "utf-8" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css"/>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='pictures/logo.png') }}"/>
+    <title>Free chat</title>
+</head>
+<body>
+
+      <!-- FLASH WAY -->
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+          <!-- The Modal for Settings -->
+          <div id="myFlashModal" class="flash_modal">
+             <!-- Modal content for Settings-->
+             <div class="flash_modal_content">
+                 <span class="close flash_close">&times;</span>
+                 <ul class=flashes>
+                  {% for message in messages %}
+                      {{ message }}
+                  {% endfor %}
+                  </ul>
+             </div>
+          </div>
+      {% endif %}
+      {% endwith %}
+
+
+    <!-- HEADER -->
+    <div id="main_page_header">
+        <!-- LOGIN -->
+        <form action="{{ url_for('login') }}" method="POST" autocomplete="on" id="login_form">
+            <div class="container">
+                <input name="uname" type="text" placeholder="Username" class="main_page_resize" 
+                {% if form  %} value="{{ form['uname'] }}" {% endif %} pattern="^\w+$"
+                title="ASCII characters only, no white spaces" required>
+                <input name="psw" type="password" placeholder="Password" minlength="7" class="main_page_resize" required>
+                <button type="submit" class="main_page_resize">Login</button>
+            </div>
+        </form>
+        <!-- LOGO -->
+        <div id="main_page_logo">
+            <a href="{{ url_for('welcome')}}">
+                <img src="{{url_for('static', filename='pictures/logo.png')}}" alt="Logo Free Chat" id="main_page_logo_picture">
+                <div id="main_page_logo_name">Free chat</div>
+            </a>
+        </div>
+    </div>
+
+    <!-- REGISTRATION -->
+    <div id="reg_page_background">
+        <form action="{{ url_for('register') }}" method="POST" autocomplete="on" id="registration_form">
+            <h1 class="text_center">Registration</h1>
+            <hr>
+
+            <!-- login -->
+            <label for="login"><b>Login</b></label>
+            <input name="login" type="text" placeholder="Enter Login" class="input_box"
+            {% if form  %} value="{{ form['login'] }}"{% endif %} pattern="^\w+$"
+            title="ASCII characters only, no white spaces" required>
+
+            <!-- password1 -->
+            <label for="psw"><b>Password, at least 7 characters</b></label>
+            <input name="psw" type="password" placeholder="Enter Password" minlength="7" autocomplete="new-password" class="input_box" required>
+
+            <!-- password2 -->
+            <label for="psw-repeat"><b>Repeat Password</b></label>
+            <input name="psw-repeat" type="password" placeholder="Repeat Password" minlength="7" autocomplete="new-password" class="input_box" required>
+            <hr>
+
+            <!-- register button -->
+            <p>By creating an account you agree to our <a href="#" id="myBtn" class="text_underline">Terms & Privacy</a>.</p>
+            <button type="submit" id="register_button">Register</button>
+        </form>
+    </div>
+
+    <!-- The Modal for Terms & Privacy -->
+    <div id="myModal" class="modal">
+        <!-- Modal content for Terms & Privacy-->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Terms & Privacy</h2>
+            <p>We do not use any personal information. You are responsible for everything you do and post.</p>
+        </div>
+    </div>
+</body>
+
+<!-- JavaScript -->
+<script type="text/javascript">
+    /* Terms & Privacy  - Inspired by W3Schools https://www.w3schools.com/howto/howto_css_modals.asp */
+    var modal = document.getElementById("myModal");
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+    // When the user clicks the button, open the modal
+    btn.onclick = function() {
+      modal.style.display = "block";
+    }
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+    // When the user clicks anywhere outside of the modal, close it
+    window.addEventListener('click',function(event){
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    });
+
+    // Get the modal
+    var modal_flash = document.getElementById("myFlashModal");
+
+    // Get the <span> element that closes the modal
+    var span_flash = document.getElementsByClassName("flash_close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span_flash.onclick = function() {
+      modal_flash.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal_flash) {
+        modal_flash.style.display = "none";
+      }
+    }
+</script>
+</html>
+</doctype>

@@ -1,0 +1,1227 @@
+/* For all */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    font-size: 16px;
+}
+
+/* colors: 001624 009a94 f2f1ec 00c14c */
+
+/**** Build-in tags ****/
+html {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body {
+    background-color: #f2f1ec;
+}
+
+h1, h2, h3 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-weight: bold;
+    color: #001624;
+}
+
+h1 {
+    font-size: 26px;
+}
+
+h2 {
+    font-size: 22px;
+}
+
+h3 {
+    font-size: 18px;
+}
+
+article {
+    height: auto;
+    width: 100%;
+
+    float: left;
+    padding-bottom: 40px;
+    box-sizing: border-box;
+}
+
+header {
+    height: 70px;
+    width: 100%;
+
+    float: left;
+    padding: 0;
+    margin: 0;
+
+    background-color: #001624;
+}
+
+a { /* Hyperlinks will have inherited color and no decoration */
+    color: inherit;
+    text-decoration: none;
+    font-size: inherit;
+}
+
+a:hover {
+    color: #00c14c;
+}
+
+input {
+    border: none;
+    font-weight: bold;
+    height: 40px;
+    background-color: #e5e7e6;
+}
+
+input:required {
+    background: url('../pictures/required.png') no-repeat 95% 50%;
+    background-size: 25px;
+}
+
+/* Code from https://www.digitalocean.com/community/tutorials/css-styling-form-input-validity */
+input:required:focus:valid {
+    background: url("https://assets.digitalocean.com/labs/icons/hand-thumbs-up.svg") no-repeat 95% 50% lightgreen;
+    background-size: 25px;
+}
+
+input:focus:invalid {
+    background: url("https://assets.digitalocean.com/labs/icons/exclamation-triangle-fill.svg") no-repeat 95% 50% lightsalmon;
+    background-size: 25px;
+}
+
+button, input[type=button] { /* Set a style for all buttons */
+    height: 40px;
+    padding: 0px 20px;
+
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+
+    background-color: #457d58;
+}
+
+button:hover, input[type=button]:hover {
+    background-color: #00c14c;
+}
+
+
+input[type=text], input[type=password] { /* Full-width inputs */
+    padding: 12px 20px;
+    display: inline-block;
+    border: 1px solid #001624;
+  }
+
+  input[type=radio] {
+      line-height: 20px;
+      background-color: lawngreen;
+  }
+
+input[type=text]:focus, input[type=password]:focus,
+input[type=text]:hover, input[type=password]:hover {
+    outline: none;
+    background-color: rgb(245, 245, 245);
+  }
+
+hr {
+    border: 1px solid  #001624;
+    margin-bottom: 15px;
+}
+
+
+/**** ---ID--- ****/
+/* ------- Main page & registration page ------- */
+#main_page_header { /* Header */
+    height: 80px;
+    width: 100%;
+
+    background-color: #f2f1ec;
+}
+
+/* Logo */
+#main_page_logo {
+    height: 100%;
+
+    float: left;
+    padding: 0px 50px;
+    color: #001624;
+}
+
+#main_page_logo_picture {
+    width: 100px;
+    margin-top: -10px;
+}
+
+#main_page_logo_name {
+    line-height: 80px;
+    float: right;
+
+    margin-left: 20px;
+
+    font-size: 26px;
+    font-weight: bold;
+}
+
+#main_page_logo_picture:hover ~ #main_page_logo_name {
+    color: #009a94;
+}
+
+#main_page_logo_name:hover {
+    color: #009a94;
+}
+/***********************/
+
+/* Login */
+#login_form { /* Login form */
+    line-height: 80px;
+
+    float: right;
+    margin-right: 30px;
+}
+
+#main_page_signup { /* Sign up */
+    line-height: 80px;
+
+    margin-right: 50px;
+    font-weight: bold;
+
+    float: right;
+    padding: 0px 20px;
+    color: #457d58;
+}
+
+#main_page_signup:hover {
+    color: #00c14c;
+}
+
+/***********************/
+
+#main_page_background { /* Main page background */
+    height: 100%;
+    width: 100%;
+
+    background-image: url('../pictures/background.png');
+    background-repeat: repeat-y;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+
+    font-family: 'Courier New', Courier, monospace;
+
+    position: relative;    /* Can adjust top,left,right,bottom  - mayb fixed? */
+}
+
+#main_page_visitor {
+    padding: 5px;
+    color: #001624;
+    border: 2px solid #009a94;
+}
+
+#main_page_visitor:hover { /* On hover - Continue as a visitor */
+    color: #009a94;
+    border: 2px solid transparent;
+    background-color: #001624;
+}
+
+footer{
+    width: 100%;
+
+    padding: 20px;
+    color: white;
+    text-align: center;    
+}
+
+.footer_cookie {
+    background-color: rgba(0,0,0,0.8);
+
+    position: fixed;
+    left: 0;
+    bottom: 0;
+}
+
+#footer_copy {
+    padding: 4px 20px;
+    float: left;
+
+    font-size: 12px;
+    color: white;
+    background-color: black;
+
+    position: fixed;
+    left: 0;
+    bottom: 0;
+}
+
+.just_for_footer {
+    width: 100%;
+    height: 20px;
+    float: left;
+}
+
+.cursor_pointer {
+    cursor: pointer;
+}
+
+/* Registration */
+#reg_page_background {
+    height: 100%;
+    width: 100%;
+
+    background-image: url('../pictures/background.png');
+    background-repeat: repeat-y;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+
+    font-family: 'Courier New', Courier, monospace;
+
+    position: relative; 
+    float: left;
+
+}
+#registration_form {
+    height: auto;
+    width: 50%;
+
+    margin-top: 5%;
+    margin-left: 25%;
+    padding: 20px;
+
+    background-color: rgba(0,0,0,0.2);
+}
+
+#register_button {
+    margin-top: 12px;
+    width: 100%;
+    opacity: 0.9;
+  }
+
+.flash_modal {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.flash_modal_content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+/***********************/
+
+/* ------- Home page ------- */
+
+/* Profile */
+
+#profile_container{
+    height: 100%;
+    width: 30%;
+
+    float: left;
+    font-weight: bold;
+    color: #009a94;
+}
+
+#profile_container_image {
+    height: 100%;
+    width: 20%;
+
+    float: left;
+    padding: 5px;
+}
+
+#profile_picture_center {
+    height: 100%;
+    max-width: 100%;
+}
+
+#profile_container_description {
+    height: 100%;
+    width: 60%;
+
+    float: left;
+    padding: 15px 0px;
+
+    text-align: center;
+}
+
+#profile_container_visitor {
+    height: 100%;
+    width: 60%;
+
+    float: left;
+    padding: 25px 0px;
+
+    text-align: center;
+}
+
+#home_page_notifications {
+    height: 100%;
+    width: 20%;
+
+    float: left;
+}
+
+/***********************/
+
+/* Search */
+#search_bar_box {
+    height: 100%;
+    width: 40%;
+
+    float: left;
+    padding-top: 15px;
+}
+
+#search_bar_form {
+    margin-left: 25%;
+}
+
+#search_bar_input {
+    height: 35px;
+    width: 60%;
+    float: left;
+    color: #001624;
+    background-color: #f2f1ec;
+}
+
+#search_bar_input:hover, #search_bar_input:focus{
+    background-color: #d6d6d5;
+}
+
+#search_bar_icon {
+    max-height: 25px;
+
+    float: left;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.search_icon {
+    width: 32px;
+    height: 32px;
+
+    float: left;
+    margin-left: 2px;
+
+    background-image: url('../pictures/hsearch.png');
+    background-image: url('../pictures/search.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+#search_bar_input:hover ~ a .search_icon, 
+#search_bar_input:focus ~ a .search_icon,
+.search_icon:hover {
+    background-image: url('../pictures/search.png');
+    background-image: url('../pictures/hsearch.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+/***********************/
+
+/* Logout */
+.logout_container {
+    height: 100%;
+    width: 30%;
+
+    float: left;
+    padding: 15px 0px;
+    text-align: center;
+}
+/***********/
+
+/* Left panel*/
+#left_panel {
+    height: auto;
+    width: 30%;
+
+    float: left;
+}
+
+/* Create new group */
+#create_new_group {
+    height: 50px;
+    width: 100%;
+}
+
+.lp_gn {
+    width: 100%;
+
+    padding: 15px;
+    font-weight: bold;
+    text-align: center;
+    color: #009a94;
+    background-color: #001624;
+}
+
+.lp_gt {
+    width: 100%;
+    
+    padding: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/***********************/
+
+/* Group */
+.group_container {
+    height: 70px;
+    width: 100%;
+
+    float: left;
+    margin-top: 2px;
+    background-color: #dad9d5;
+}
+
+.group_container:hover {
+    background-color: #cecece;
+}
+
+.left_panel_group_picture_container {
+    height: 100%;
+    width: 20%;
+
+    float: left;
+    padding: 5px;
+}
+
+.left_panel_group_picture {
+    height: 100%;
+    max-width: 100%;
+}
+
+.left_panel_group_text {
+    height: 100%;
+    width: 60%;
+
+    float: left;
+}
+
+.left_panel_group_title {
+    height: 50%;
+    width: 100%;
+
+    padding: 25px 0px;
+    font-size: 18px;
+    font-weight: bold;
+
+    display: inline-block;
+    text-align: center;
+}
+
+.left_panel_group_desrciption {
+    height: 50%;
+    width: 100%;
+
+    padding: 10px 0px;
+
+    display: inline-block;
+    text-align: center;
+}
+
+.icon_center {
+    width: 50%;
+
+    float: left;
+    margin-left: 25%;
+}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {display:block;}
+
+/***********************/
+
+/* The Modal Windows */
+/* Modal window for Members */
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+/****************************/
+
+/* Table Members */
+.group_rc {
+    height: auto;
+    width: 100%;
+
+    text-align: center;
+}
+
+.table_members {
+    width: 100%;
+}
+
+.table_members th {
+    width: 33%;
+}
+
+.table_members tr {
+    height: 50px;
+}
+
+.table_members tr td {
+    text-align: center;
+    height: 80px;
+}
+
+.members_picture {
+    max-height: 70px;
+    max-width: 140px;
+}
+/*****************/
+
+/* Table settings */
+.settings_title {
+    text-align: center;
+}
+/******************/
+
+/* Right panel */
+.right_panel {
+    height: auto;
+    width: 70%;
+
+    float: left;
+    padding: 5px;
+}
+
+/* Creating new group */
+#creating_new_group {
+    height: auto;
+    width: 60%;
+
+    float: right;
+    margin-right: 20%;
+    padding: 5px;
+    text-align: center;
+
+    display: none;
+}
+/***********************/
+
+/* Creatin new thread */
+#creating_new_thread {
+    height: auto;
+    width: 100%;
+
+    float: right;
+    padding: 5px;
+
+    display: none;
+}
+/***********************/
+
+/*  GROUP HEADER */
+#group_header {
+    height: auto;
+    width: 100%;
+}
+
+.rp_gi {
+    height: 120px;
+    width: 50%;
+
+    float: left;
+}
+
+.img_center {
+    height: 100px;
+    max-width: 30%;
+
+    margin-top: 10px;
+    margin-right: 20px;
+    float: right;
+    display: block;
+}
+
+.rp_gn {
+    height: 120px;
+    width: 50%;
+
+
+    text-align: left;
+    padding: 30px 20px;
+
+    float: left;
+}
+
+.rp_gd {
+    height: auto;
+    width: 100%;
+
+    float: left;
+    padding: 15px;
+    text-align: center;
+}
+
+.rp_gb {
+    height: auto;
+    width: 100%;
+
+    float: left;
+    padding: 15px;
+    text-align: center;
+}
+
+/*****************/
+
+.join_group {
+    height: 50px;
+    width: 100px;
+
+    cursor: pointer;
+    position: relative;
+}
+
+/* Group threads */
+#group_threads {
+    height: auto;
+    width: 100%;
+
+    float: right;
+    text-align: center;
+}
+
+/* Create new thread */
+.create_new_thread {
+    height: 50px;
+    width: 100%;
+}
+
+#create_new_thread_button {
+    height: 50px;
+    width: 100%;
+}
+
+
+.new_thread_title {
+    width: 100%;
+
+    font-size: large;
+    text-align: center;
+}
+/***********************/
+
+/* Thread */
+.thread_container {
+    height: auto;
+    width: 100%;
+
+    float: left;
+    margin-top: 10px;
+}
+
+.thread_header_gp {
+    width: 100%;
+
+    float: left;
+    padding: 3px;
+
+    text-align: center;
+    background-color: #001624;
+    color: #009a94;
+}
+
+.thread_header_gp:hover {
+    color: #00c14c;
+}
+
+.thread_title_gp {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.thread_content_gp {
+    width: 100%;
+
+    float: left;
+    padding: 10px;
+    text-align: left;
+    background-color: lightgray;
+}
+
+.threads_caption {
+    width: 100%;
+    padding: 20px;
+}
+/*********/
+
+.thread_header {
+    height: auto;
+    width: 100%;
+
+    float: left;
+    padding: 20px;
+    position: static;
+
+    text-align: center;
+}
+
+/* Posts */
+#thread_posts {
+    height: auto;
+    width: 100%;
+
+    float: left;
+    margin-top: 50px;
+}
+
+.post {
+    height: auto;
+    width: 50%;
+
+    float: left;
+    margin-top: 15px;
+    margin-left: 25%;
+}
+
+.post_header {
+    width: 100%;
+
+    float: left;
+    padding: 2px 20px;
+
+    font-size: 12px;
+    font-weight: bold;
+    color: #009a94;
+    background-color: #001624;    
+}
+
+.post_header_text {
+    font-size: 14px;
+}
+
+.post_text {
+    height: auto;
+    width: 100%;
+
+    float: left;
+    padding: 20px;
+
+    background-color: white;
+}
+
+.post_ranking {
+    width: 100%;
+
+    float: left;
+    padding: 3px 20px;
+
+    font-size: 14px;
+    background-color: lightgray;
+}
+
+.post_new_message {
+    width: 50%;
+
+    float: left;
+    margin-left: 25%;
+    margin-top: 15px;
+}
+
+.post_new_message  input {
+    width: 90%;
+    background-color: white;
+}
+
+.post_new_message input:hover {
+    background-color: rgb(228, 228, 228);
+}
+
+.post_new_message  button {
+    width: 10%;
+
+    float: right;
+}
+
+.inc_trans {
+    transform: rotate(270deg);
+    display: inline-block;  
+
+    margin-left: 10px;
+}
+
+.dec_trans {
+    transform: rotate(90deg);
+    display: inline-block;
+
+    margin-left: 12px;
+}
+
+.hr_for_posts {
+    margin: 0;
+}
+/*********/
+
+/* ---PROFILE PAGE--- */
+
+/* HEADER */
+.go_home_boy {
+    height: 100%;
+    width: 30%;
+
+    float: left;
+    padding: 22px 0px;
+    text-align: center;
+
+    font-weight: bold;
+    color: #009a94;
+}
+
+.go_home_boy_text {
+    font-size: 22px;
+}
+
+/***********************/
+/* PROFILE */
+
+#profile {
+    width: 100%;
+    text-align: center;
+    float: left;
+    padding: 40px 0px;
+}
+
+.profile_picture {
+    height: 150px;
+    max-width: 200px;
+}
+/*************************/
+
+/* Settings container */
+#settings_container {
+    width: 50%;
+    margin-left: 25%;
+    text-align: center;
+    float: left;
+    padding: 40px 0px;
+    display: none;
+}
+/**********************/
+
+/* SEARCH PAGE */
+
+.search {
+    height: auto;
+    width: 50%;
+
+    float: left;
+    margin-left: 25%;
+
+    text-align: center;
+}
+
+.search_result {
+    height: 70px;
+    width: 100%;
+
+    float: left;
+    margin-top: 5px;
+
+    font-size: 20px;
+    background-color: white;
+}
+
+.search_result:hover {
+    background-color: rgb(235, 235, 235);
+}
+
+.search_result_part {
+    width: 50%;
+    float: left;
+    text-align: center;
+}
+
+.search_result_part_text {
+    padding-top: 25px;
+}
+
+.search_picture {
+    height: 60px;
+    max-width: 120px;
+
+    margin-top: 5px;
+}
+/***************/
+
+/**** ---Classes--- ****/
+
+.text_align_center {
+    text-align: center;
+}
+
+.div_for_titles {
+    width: 100%;
+    padding: 5px;
+    float: left;
+    text-align: center;
+}
+
+.margin_top_bottom {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.del_button {
+    background-color: #ba1818;
+}
+
+.del_button:hover {
+    background-color: #ff1c1c;
+}
+
+.float_right {
+    float: right;
+}
+
+.for_back_button {
+    width: 100%;
+    padding: 5px;
+    float: left;
+}
+
+.a_button {
+   float: right;
+}
+
+.radio {
+    height: auto;
+    width: auto;
+}
+
+.rb_input {
+    line-height: 20px;
+}
+
+.float_left {
+    float: left;
+}
+
+.notification_container {
+    width: 50%;
+
+    float: left;
+    margin-left: 25%;
+    padding: 20px;
+}
+
+.description {
+    height: 150px;
+    width: 50%;
+
+    margin-top: 5px;
+    margin-left: 25%;
+    padding: 5px;
+
+    overflow-y: scroll;
+    text-align: left;
+    background-color: white;
+}
+
+#rm_img {
+    display: none;
+}
+
+.remove_img_form {
+    cursor: pointer;
+}
+
+.remove_img_form:hover {
+    color: #00c14c;
+}
+
+/* Text */
+.text_shadow_white {
+    text-shadow: white 1px 1px 3px;
+    color:white;
+}
+
+.text_size_xxl {
+    font-size: xx-large;
+}
+
+.text_center {
+    text-align: center;
+}
+
+.text_underline {
+    text-decoration: underline;
+}
+
+.text_white {
+    color: white;
+  }
+.text_orange {
+    color: #f75f00c5;
+  }
+/***********************/
+
+/* Background */
+.background_color_dark {
+    background-color: #1f1e1c;
+}
+.background_color_light {
+    background: #f1f1f1;
+}
+.background_color_green {
+    background-color: #4CAF50;
+}
+.background_color_orange {
+    background-color: #f75f00c5;
+}
+.background_color_dark_grey {
+    background-color: #272121;
+}
+.background_color_grey {
+    background-color: #363333;
+}
+.background_color_light_grey {
+    background-color: #f1f1f1;
+}
+/***********************/
+
+.input_box {
+    width: 100%;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+  }
+
+.scroll_box {
+    overflow: auto;
+}
+
+.center {
+    margin: 0;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+/* Responsive - adjusting with smaller screens */
+/* Max-width 1100px */
+@media screen and (max-width: 1150px) {
+    /* Home page */
+    #search_bar_icon {
+        display: none;
+    }
+    #home_page_logo_name {
+        display: none;
+    }
+    #search_bar_box {
+        padding-left: 5%;
+    }
+    #profile_picture_center {
+        margin-left: 10px;
+    }
+    #home_page_logo {
+        padding-left: 0 20px;
+    }
+    h2 {
+        font-size: large;
+    }
+}
+
+ /* max-width 800px */
+@media screen and (max-width: 800px) {
+    /* Main page and registration page */
+    #main_page_header {
+        height: 200px;
+    }
+    #main_page_background {
+        font-size: large;
+    }
+    #main_page_login_form, #main_page_signup, .main_page_resize {
+        float: left;
+        height: 50px;
+        line-height: 50px;
+        width: 100%;
+
+        text-align: center;
+
+        margin:-1px 0 0 -1px;   /* No border collapse */
+        padding: 0px;
+        display: block;
+    }
+    #main_page_logo {
+        display: none;
+    }
+
+    #registration_form {
+        margin: 0;
+        width: 100%;
+        background-image: url('../pictures/main_background.jpg');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    }
+    hr{
+        display: none;
+    }
+
+    /* Home page */
+    #profile_container_image {
+        width: 20%;
+    }
+    #profile_picture_center {
+        margin: 5px;
+    }
+    #search_bar_box {
+        width: 60%;
+        padding-left: 0;
+    }
+    #search_bar_input {
+        width: 90%;
+        margin-left: 5%;
+    }
+    #home_page_logo{
+        width: 20%;
+        padding: 0px 10px;
+    }
+    #profile_page_logo_name{
+        display: none;
+    }
+  }

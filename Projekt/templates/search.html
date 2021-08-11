@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset = "utf-8" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css"/>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='pictures/logo.png') }}"/>
+    <title>Free chat</title>
+</head>
+<body>
+    <!-- FLASH WAY -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <!-- The Modal for Settings -->
+        <div id="myFlashModal" class="flash_modal">
+           <!-- Modal content for Settings-->
+           <div class="flash_modal_content">
+               <span class="close flash_close">&times;</span>
+               <ul class=flashes>
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+                </ul>
+           </div>
+        </div>
+    {% endif %}
+    {% endwith %}
+
+    <!-- HEADER - profile + search + logo -->
+    <header>
+        <!-- PROFILE -->
+        <!-- If user is logged in -->
+        {% if not visitor %}
+            <div id="profile_container">
+                <a href="{{ url_for('profile', user_id=user_id) }}">
+                    <div id="profile_container_image">
+                        <img src="{{ img_src }}" alt="Profile picture" id="profile_picture_center"/>
+                    </div>
+                    <div id="profile_container_description">
+                        {{ username }} 
+                    </div>
+                </a>
+            </div>
+        <!-- If he is a visitor -->
+        {% else %}
+            <div id="profile_container">
+                <div id="profile_container_image">
+                    <img src="{{ img_src }}" alt="Profile picture" id="profile_picture_center"/>
+                </div>
+                <div id="profile_container_visitor">
+                    <span class="visitor_title">Visitor</span>
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- SEARCH -->
+        <div id="search_bar_box">
+            <!-- TODO searchbar -->
+            <form action="{{ url_for('search') }}" method="POST" id="search_bar_form" >
+                <input type="text" placeholder="Search.." name="search" id="search_bar_input">
+                <a href="#" type="submit" onclick="submit_form()">
+                    <div class="search_icon"></div>
+                </a>
+            </form>
+        </div>
+
+        <!-- LOGOUT or LOGIN for visitor -->
+        {% if not visitor %}
+        <div class="logout_container">
+            <a href="{{ url_for('logout') }}">
+                <button>Logout</button>
+            </a>
+        </div>
+        {% else %}
+        <div class="logout_container">
+            <a href="{{ url_for('login') }}">
+                <button>Login</button>
+            </a>
+        </div>
+        {% endif %}
+    </header>
+
+    <article>
+        <!-- Go back -->
+        <div class="for_back_button">
+            <a href="{{ url_for('group', group_id=group_id) }}">
+                <button class="float_left">
+                    &#10094; Back
+                </button>
+            </a>
+        </div>
+        
+        <!-- Search results -->
+        <div class="search">
+            <!-- Users -->
+            {% if users %}
+                <div class="div_for_titles">
+                    <h2>Users</h2>
+                </div>
+                
+                {% for user in users %}
+                    <a href="{{ url_for('profile', user_id=user[0].ID) }}">
+                        <div class="search_result">
+                            <div class="search_result_part">
+                                <img src="{{ user[1] }}" alt="Profile image" class="search_picture">
+                            </div>
+
+                            <div class="search_result_part search_result_part_text">
+                                <h3>{{ user[0].Login }}</h3>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+            {% endif %}
+
+            <!-- Groups -->
+            {% if groups %}
+                <div class="div_for_titles">
+                    <h2 class="margin_top_bottom">Groups</h2>
+                </div>
+
+                {% for group in groups %}
+                    <a href="{{ url_for('group', group_id=group[0].ID) }}">
+                        <div class="search_result">
+                            <div class="search_result_part">
+                                <img src="{{ group[1] }}" alt="Group image" class="search_picture">
+                            </div>
+                            <div class="search_result_part search_result_part_text">
+                                <h3>{{ group[0].Name }}</h3>
+                            </div>
+                        </div>
+                    </a>                    
+                {% endfor %}
+            {% endif %}
+
+            {% if not users and not groups %}
+            <p>No results found</p>
+            {% endif %}
+        </div>
+    </article>
+</body>
+
+<!-- JavaScript -->
+<script type="text/javascript">
+    // Get the modal
+    var modal = document.getElementById("myFlashModal");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+</script>
+</html>

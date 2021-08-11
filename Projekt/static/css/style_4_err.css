@@ -1,0 +1,40 @@
+/* For all */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1.5em;
+}
+
+body {
+    height: auto;
+    background-color: #f2f1ec;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+img {
+    width: 300px;
+}
+
+.middle {
+    width: 100%;
+    float: left;
+    text-align: center;
+    padding-top: 0px;
+}
+
+.middle_img {
+    width: 250px;
+}
+
+.test {
+    font-size: 10px;
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Projekt IIS</title>
+    <style type="text/css">
+    	table { border-collapse: collapse; }
+    	td, th { border: 1px solid black; padding: 0.3em 0.5em; text-align: left; }
+    	dt { font-weight: bold; margin-top: 0.5em; }
+    </style>
+</head>
+<body>
+
+<!-- Zkontrolujte prosím nastavení kódování v hlavičce dokumentu
+     podle použitého editoru -->
+
+<h1>Sociální síť: diskuse v diskusních skupinách</h1> <!-- Nahradte názvem svého zadání -->
+
+<dl>
+	<dt>Autoři</dt>
+	<dd>Vojtěch Ulej (vedúci) <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
+	    <a href="mailto:xulejv00@stud.fit.vutbr.cz">xulejv00@stud.fit.vutbr.cz</a> -
+		Databáza & funkcie pracujúce s databázou.
+	</dd>
+	<dd>Roman Fulla <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
+	    <a href="mailto:xfulla00@stud.fit.vutbr.cz">xfulla00@stud.fit.vutbr.cz</a> -
+		Aplikačná logika & backend
+	</dd>
+  <dd>Daniel Andraško <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
+	    <a href="mailto:xandra05@stud.fit.vutbr.cz">xandra05@stud.fit.vutbr.cz</a> -
+		Dizajn stránky & frontend
+	</dd>
+	<dt>URL aplikace</dt>
+	<dd><a href="https://freechat.tech/">https://freechat.tech/</a></dd>
+  <dd><a href="https://manifest-life-296510.oa.r.appspot.com/">https://manifest-life-296510.oa.r.appspot.com/</a></dd>
+</dl>
+
+<h2>Uživatelé systému pro testování</h2>
+<p>Uveďte prosím existující zástupce <strong>všech rolí uživatelů</strong>.</p>
+<table>
+<tr><th>Login</th><th>Heslo</th><th>Role</th></tr>
+<tr><td>Admin</td><td>nimdA12</td><td>Administrátor</td></tr>
+<tr><td>User</td><td>resu123</td><td>Užívateľ</td></tr>
+<tr><td>--</td><td>--</td><td>Návštevník ("prihlásenie" pomocou tlačidla)</td></tr>
+</table>
+
+<p>(Diagram případů užití není nutné vkládat, pokud IS implementuje role a případy užití definované zadáním.)</p>
+
+<h2>Implementace</h2>
+<p>V súbore <i>freechat.py</i> sa nachádzajú funkcie priradené k jednotlivým vstupným bodom, ktoré pokrývajú všetky implementované prípady užitia.</p>
+<p>V <i>db.py</i> je implementovaná funkcia pripojenia ku databáze a trieda DB, ktorá obsahuje metódy pre prácu s databázou.</p>
+<p>Súbor <i>db.ini</i> obsahuje informácie potrebné ku pripojeniu ku databáze. <i>init.sql</i> obsahuje samotnú implementáciu databázy.</p>
+
+<h3>Databáze</h3>
+
+<img src="ERD.jpg" alt="ERD">
+
+<h2>Instalace</h2>
+
+Stručně popište:
+<ul>
+    <li>postup instalace na server:
+        <ol>
+            <li>pip install -r requirements.txt</li>
+            <li>FLASK_APP=freechat.py flask run # For debugging</li>
+            <li>gunicorn -b :$PORT freechat:app # For production ($PORT určuje na který port se má aplikace navázat)</li>
+        </ol>
+    </li>
+    <li>softwarové požadavky :
+        <ul>
+            <li>python 3.7.8 (minimální testovaná verze)</li>
+            <li>python 3.8.6 (nejvyšší testovaná verze)</li>
+            <li>balíčky uvedené v requirements.txt</li>
+            <li>Při chybě instalace mysqlclient balíčku postupujte dle <a href="https://pypi.org/project/mysqlclient/">návodu na oficiální stránce</a></li>
+        </ul>
+    </li>
+    <li>jak rozbalit, konfigurovat, inicializovat databázi:
+        <ul>
+            <li>Tato aplikace používá mysql jako databázový server</li>
+            <li>Inicializační skript se nachází v <i>sql/init.sql</i> který je nutno spusti na serveru databáze</li>
+            <li>Konfigurace připojení k databázy se nachází v souboru db.ini všechny uvedené údaje jsou povinné</li>
+            <li>Pro připojení je nutné mít na serveru zapnuté ssl a nebo v souboru src/db.py ve funkci init_db z hodnoty app.config['SQLALCHEMY_DATABASE_URI'] odstraňte ?ssl=true</li>
+        </ul>
+    </li>
+</ul>
+
+<h2>Známé problémy</h2>
+<p>
+    Načtení nových zpráv probíhá jen při kliknutí na tlačítko load new posts, nebo obnovení stránky. Z časových důvodů jsme nestihli implementovat javascript funkci, která by periodicky přidávala nové zprávy (AJAX).
+</p>
+<p>
+    Zobrazuje se jen posleních 200 zpráv ve vláknu. Z časových důvodů jsme nestihli implementovat načítání starších zpráv.
+</p>
+
+<h2>V případě problému při testování:</h2>
+<p>Obnovte databázový server pomocí skriptu sql/init.sql. Informace pro připojení jsou v souboru db.ini</p>
+<p>Při chybě internal server error zkuste akci provést znovu vícekrát.</p>
+<p>Hodnotenie príspevkou, má v prvej iterácii z nezistených príčin, neočakávané chovanie.</p>
+
+</body>
+</html>

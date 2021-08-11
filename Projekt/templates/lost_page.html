@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = "utf-8" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style_4_err.css') }}" type="text/css"/>
+        <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='pictures/logo.png') }}"/>
+        <title>Free chat</title>
+    </head>
+    <body>
+        <!-- FLASH WAY -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <!-- The Modal for Settings -->
+        <div id="myFlashModal" class="flash_modal">
+           <!-- Modal content for Settings-->
+           <div class="flash_modal_content">
+               <span class="close flash_close">&times;</span>
+               <ul class=flashes>
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+                </ul>
+           </div>
+        </div>
+    {% endif %}
+    {% endwith %}
+
+    <!-- JavaScript -->
+    <script>
+        // Get the modal
+    var modal = document.getElementById("myFlashModal");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+    </script>
+
+        <div class="middle">
+            <span>You got lost...</span><br><br>
+            <img src="{{ url_for('static', filename='pictures/lost.png') }}" alt="Lost" class="middle_img"/><br><br>
+            <span>Let us take you back <a href="/welcome/"><b>home</b></a> OR...</span><br><br>
+            <canvas id="gc" width="400" height="400"></canvas>
+        </div>         
+    
+    <!-- source: https://www.ansoriweb.com/2020/03/javascript-game.html -->
+    <script>
+        window.onload=function() {        
+            canv=document.getElementById("gc");        
+            ctx=canv.getContext("2d");        
+            document.addEventListener("keydown",keyPush);        
+            setInterval(game,1000/15);        
+        }
+        
+        px=py=10;        
+        gs=20;
+        tc=20;    
+        ax=ay=5;        
+        xv=yv=0;        
+        trail=[];        
+        tail = 5;
+
+        function game() {        
+            px+=xv;        
+            py+=yv;
+
+            if(px<0) {        
+                px= tc-1;        
+            }
+        
+            if(px>tc-1) {        
+                px= 0;        
+            }
+        
+            if(py<0) {        
+                py= tc-1;
+            }
+        
+            if(py>tc-1) {        
+                py= 0;        
+            }
+        
+            ctx.fillStyle="black";        
+            ctx.fillRect(0,0,canv.width,canv.height);       
+            ctx.fillStyle="lime";
+        
+            for(var i=0;i<trail.length;i++) {        
+                ctx.fillRect(trail[i].x*gs,trail[i].y*gs,gs-2,gs-2);
+
+                if(trail[i].x==px && trail[i].y==py) {        
+                    tail = 5;        
+                }        
+            }
+        
+            trail.push({x:px,y:py});
+
+            while(trail.length>tail) {        
+            trail.shift();        
+            }      
+        
+            if(ax==px && ay==py) {        
+                tail++;        
+                ax=Math.floor(Math.random()*tc);        
+                ay=Math.floor(Math.random()*tc);        
+            }
+        
+            ctx.fillStyle="red";        
+            ctx.fillRect(ax*gs,ay*gs,gs-2,gs-2);        
+        }
+        
+        function keyPush(evt) {        
+            switch(evt.keyCode) {        
+                case 37:        
+                    xv=-1;yv=0;        
+                    break;
+                            
+                case 38:        
+                    xv=0;yv=-1;        
+                    break;
+        
+                case 39:        
+                    xv=1;yv=0;        
+                    break;
+        
+                case 40:        
+                    xv=0;yv=1;        
+                    break;        
+            }        
+        }            
+    </script>
+        </body>
+</html>

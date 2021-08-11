@@ -1,0 +1,228 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset = "utf-8" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css"/>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='pictures/logo.png') }}"/>
+    <title>Free chat</title>
+</head>
+
+<!-- BODY -->
+<body>
+    <!-- FLASH WAY -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <!-- The Modal for Settings -->
+        <div id="myFlashModal" class="flash_modal">
+           <!-- Modal content for Settings-->
+           <div class="flash_modal_content">
+               <span class="close flash_close">&times;</span>
+               <ul class=flashes>
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+                </ul>
+           </div>
+        </div>
+    {% endif %}
+    {% endwith %}
+
+    <!-- HEADER - search + home -->
+    <header>
+        <!-- GO HOME -->
+        <div class="go_home_boy">
+            <a href="{{ url_for('home') }}">
+                <span class="go_home_boy_text">Home</span>
+            </a>
+        </div>
+
+        <!-- SEARCH -->
+        <div id="search_bar_box">
+            <!-- TODO searchbar -->
+            <form action="{{ url_for('search') }}" method="POST" id="search_bar_form" >
+                <input type="text" placeholder="Search.." name="search" id="search_bar_input">
+                <a href="#" type="submit" onclick="submit_form()">
+                    <div class="search_icon"></div>
+                </a>
+            </form>
+        </div>
+
+        <!-- LOGOUT or LOGIN for visitor -->
+        {% if not visitor %}
+        <div class="logout_container">
+            <a href="{{ url_for('logout') }}">
+                <button>Logout</button>
+            </a>
+        </div>
+        {% else %}
+        <div class="logout_container">
+            <a href="{{ url_for('login') }}">
+                <button>Login</button>
+            </a>
+        </div>
+        {% endif %}
+    </header>
+
+    <!-- PROFILE -->
+    <div id="profile">
+        <!-- PROFILE PICTURE CONTAINTER -->
+        <div class="picture_container">
+            <img src="{{ img_src }}" alt="Profile picture" class="profile_picture">
+        </div>
+
+        <!-- PROFILE INFO CONTAINER -->
+        <div id="info_container">
+            <h1>Username: {{ username }}</h1><br>
+            <p><b>Name:</b> {{ name }}</p><br>
+            <p><b>Surname:</b> {{ surname }}</p><br>
+            <p><b>Visibility:</b></p>
+            {% if visibility == 0 %}
+            Public
+            {% else %}
+            Private
+            {% endif %}
+            <br> <br>
+            <p><b>Description:</b>
+            <div class="description">
+                <p> {{ description }} </p>
+            </div>            
+            <br>
+            {% if admin or owner %}
+            <button type="button" onclick="show_settings()">Settings</button>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- PROFILE SETTINGS -->
+    <div id="settings_container">
+
+        <!-- Back and delete buttons -->
+        <div class="for_back_button">
+            <!-- back -->
+            <button type="button" onclick="show_profile_info()" class="float_left">&#10094; Back</button>
+
+            <!-- delete profile -->
+            {% if (admin or owner) and (user_id != 1) %}
+            <a href="{{ url_for('delete_account', user_id=user_id) }}" onclick="return confirm('Are you sure you want to delete this profile?');">
+                <button class="del_button float_right">Delete profile</button>
+            </a>
+            {% endif %}
+        </div>
+
+        <!-- Settings -->
+        <form action="{{ url_for('user_settings', user_id=user_id) }}" autocomplete="off" method="POST" enctype="multipart/form-data" id="settings">
+            <h1>Settings</h1><hr><br>
+
+            <!-- login -->
+            <label for="login"><b>Change Login</b></label>
+            <input name="login" type="text" placeholder="Enter Login" class="input_box"
+            {% if form  %} value="{{ form['login'] }}"{% endif %} pattern="^([\x00-\x7F])\S+$"
+            title="ASCII characters only, no white spaces" maxlength="30">
+
+            <!-- password1 -->
+            <label for="password1"><b>Change Password</b></label>
+            <input name="password1" type="password" placeholder="Enter Password" autocomplete="new-password" class="input_box">
+
+            <!-- password2 -->
+            <label for="password2"><b>Repeat Password</b></label>
+            <input name="password2" type="password" placeholder="Repeat Password" autocomplete="new-password" class="input_box">
+
+            <!-- first name -->
+            <label for="fname"><b>Change First Name</b></label>
+            <input name="fname" id ="fname" type="text" placeholder="Enter First Name" class="input_box" maxlength="20">
+
+            <!-- last name -->
+            <label for="lname"><b>Change Last Name</b></label>
+            <input type="text" name="lname" id="lname" placeholder="Enter Last Name" class="input_box" maxlength="20">
+
+            <!-- description -->
+            <label for="description"><b>Description</b></label>
+            <input type="text" name="description" id="description" placeholder="Enter Description" class="input_box" maxlength="2000">
+
+            <!-- profile image -->
+            <label for="profile_image"><b>Profile Picture</b></label>
+            <input id="profile_image" name="profile_image" type="file" {% if form %} value={{ form['profile_image'] }} {% endif %}
+            placeholder="Profile pricture" accept="image/*" onchange="Filevalidation()" capture>
+            <p id="size"></p>
+            <span id="rm_img" class="remove_img_form" onclick="remove_img()">Remove image</span>
+            <br><br>
+
+            <!-- visibility -->
+            <label for="visibility"><h3>Visibility for:</h3></label><br>
+
+            <input id="visibility1"  class="radio" type="radio" name="visibility" value="0" {% if not form %} checked="checked" {% elif form['visibility'] == "0" %} checked="checked" {% endif %}>
+            <label for="visibility1" class="radio">Public: All users</label><br>
+           
+            <input id="visibility2"  class="radio" type="radio" name="visibility" value="1" {% if form and form['visibility'] == '1' %} checked = "checked" {% endif %}>
+            <label for="visibility2" class="radio">Private: Registered users</label><br><br>
+
+            <!-- current password -->
+            <label for="current_password"><b> Enter Current Password</b></label>
+            <input name="current_password" type="password" placeholder=" Enter Current Password" class="input_box" required>
+
+            {% if admin or owner %}
+            <!-- save and back-->
+            <button form="settings" type="submit">Save changes</button>
+            {% endif %}
+        </form>
+    </div>
+</body>
+
+<!-- JavaScript -->
+<script type="text/javascript">
+    function show_settings(){
+        document.getElementById("settings_container").style.display= 'block';
+        document.getElementById("profile").style.display= 'none';
+    }
+    function show_profile_info(){
+        document.getElementById("settings_container").style.display= 'none';
+        document.getElementById("profile").style.display= 'block';
+    }
+
+    /* Remove image from form */
+    function remove_img(){
+        document.getElementById("profile_image").value = "";
+        document.getElementById("rm_img").style.display = "none";
+    }
+
+    /* Validating file size */
+    Filevalidation = () => { 
+        const fi = document.getElementById('profile_image'); 
+        // Check if any file is selected. 
+        if (fi.files.length > 0) 
+        { 
+            const fsize = fi.files.item(0).size;
+            const file = Math.round((fsize / 1024));
+
+            // The size of the file. 
+            if (file >= 2048)
+            { 
+                alert("File is too Big, please select a file less than 2mb"); 
+                document.getElementById("size").innerHTML = '<b>' + file + '</b> KB'; 
+                remove_img();
+            }       
+            document.getElementById("rm_img").style.display = "block";  
+        }        
+    } 
+
+    
+    // Get the modal
+    var modal = document.getElementById("myFlashModal");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+</script>
+</html>
+</doctype>

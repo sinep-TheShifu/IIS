@@ -1,0 +1,95 @@
+<!-- TODO input overit -->
+<doctype! html>
+<html>
+<head>
+    <meta charset = "utf-8"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css"/>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='pictures/logo.png') }}"/>
+    <title>Free chat</title>
+</head>
+<body>
+    <!-- FLASH WAY -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <!-- The Modal for Settings -->
+        <div id="myFlashModal" class="flash_modal">
+           <!-- Modal content for Settings-->
+           <div class="flash_modal_content">
+               <span class="close flash_close">&times;</span>
+               <ul class=flashes>
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+                </ul>
+           </div>
+        </div>
+    {% endif %}
+    {% endwith %}     
+
+    <!-- HEADER -->
+    <div id="main_page_header">
+        <!-- SIGN UP -->
+        <a href="{{ url_for('register') }}">
+            <div id="main_page_signup">
+                Sign up
+            </div>
+        </a>
+        <!-- LOGIN -->
+        <form action="{{ url_for('login') }}" method="POST" autocomplete="on" id="login_form">
+            <div class="container">
+                <input name="uname" type="text" placeholder="Username" class="main_page_resize" 
+                {% if form  %} value="{{ form['uname'] }}" {% endif %} pattern="^\w+$"
+                title="ASCII characters only, no white spaces" required>
+                <input name="psw" type="password" placeholder="Password" minlength="7" class="main_page_resize" required>
+                <button type="submit" class="main_page_resize">Login</button>
+            </div>
+        </form>
+        <!-- LOGO -->
+        <div id="main_page_logo">
+            <a href="{{ url_for('welcome')}}">
+                <img src="{{url_for('static', filename='pictures/logo.png')}}" alt="Logo Free Chat" id="main_page_logo_picture">
+                <div id="main_page_logo_name">Free chat</div>
+            </a>
+        </div>
+    </div>
+
+    <!-- BODY -->
+    <div id="main_page_background" class="text_center">
+        <span class="center">
+            <h2>Free chat</h2>
+            <a href="{{ url_for('guest') }}">
+                <div id="main_page_visitor">Continue as a visitor</div>
+            </a>
+        </span>
+    </div>
+
+    <!-- Footer -->
+    <footer id="hide" class="footer_cookie"> We are using cookies, by proceeding or pressing <span onclick="hide_footer()" class="cursor_pointer"><b>OK</b></span> you agree</footer>
+</body>
+
+<!-- JavaScript -->
+<script type="text/javascript">
+    // Hie footer
+    function hide_footer(){
+        document.getElementById("hide").style.display = 'none'; 
+    }
+
+    // Get the modal
+    var modal = document.getElementById("myFlashModal");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    } 
+</script>
+</html>
